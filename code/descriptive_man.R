@@ -1,3 +1,7 @@
+# Set working directory to project root
+setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
+
+# Load libraries
 library(readr)
 library(dplyr)
 library(labelled)
@@ -7,7 +11,7 @@ library(tidyverse)
 library(gt)
 
 # dataset
-NWSS <- read_csv("NWSS.csv")
+NWSS <- read_csv("data/NWSS.csv")
 # ptc_15d, population_served. sampling prior, wwtp_jurisdiction, date_start, date_end, detect_prop_15d
 
 # Labels
@@ -44,8 +48,7 @@ descriptive %>%
   gt::tab_header(
     title = "Descriptive Statistics of NWSS Data",
     subtitle = "Grouped by Sample Location and Year "
-  )
-
-saveRDS(descriptive, "output/descriptive_out_man.rds")
+  ) %>%
+  gtsave("output/descriptive_out_man.html")
 
 
